@@ -1,8 +1,14 @@
 package Novartus;
 
+import javafx.beans.binding.Binding;
+import javafx.beans.binding.Bindings;
+import javafx.beans.binding.StringBinding;
 import javafx.beans.property.ReadOnlyIntegerProperty;
+import javafx.beans.property.StringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -11,22 +17,24 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class Controller implements Initializable {
-    private Task currenTask = new Task();
+    private final Task currenTask = new Task();
+    private final ObservableList<Task> tasks = FXCollections.observableArrayList();
+
 
     @FXML
     private ProgressBar progressbar;
 
     @FXML
-    private TableView<?> tasksTable;
+    private TableView<Task> tasksTable;
 
     @FXML
-    private TableColumn<?, ?> priority_col;
+    private TableColumn<Task, String> priority_col;
 
     @FXML
-    private TableColumn<?, ?> description_col;
+    private TableColumn<Task, String> description_col;
 
     @FXML
-    private TableColumn<?, ?> progress_col;
+    private TableColumn<Task, String> progress_col;
 
     @FXML
     private ComboBox<String> priority_combobox;
@@ -64,7 +72,11 @@ public class Controller implements Initializable {
                 } else {
                     completed_checkbox.setSelected(false);
                 }
-            //    progressbar.setProgress(1.0 * newvalue / 100);
+               /* System.out.println(currenTask.getDescription());
+                System.out.println(currenTask.getPriority());
+                System.out.println(currenTask.getProgress());
+
+               currenTask.setDescription(currenTask.getProgress().toString());*/
             }
         });
 
@@ -74,5 +86,58 @@ public class Controller implements Initializable {
         priority_combobox.valueProperty().bindBidirectional(currenTask.priorityProperty());
         description_field.textProperty().bindBidirectional(currenTask.descriptionProperty());
         progress_spinner.getValueFactory().valueProperty().bindBidirectional(currenTask.progressProperty());
+
+        tasksTable.setItems(tasks);
+        priority_col.setCellValueFactory(rowData -> rowData.getValue().priorityProperty());
+        description_col.setCellValueFactory(rowData -> rowData.getValue().descriptionProperty());
+        progress_col.setCellValueFactory(rowData -> Bindings.concat(rowData.getValue().progressProperty(), "%"));
+
+
+        tasks.addAll(
+                new Task(1, "High", "Completed Doc", 10),
+                new Task(2, "Medium", "JavaFX", 0));
+
+
+        // ADD -> Update Button || Update -> Add Button
+       StringBinding addButtonTextBinding = new StringBinding() {
+           {
+               super.bind(currenTask.idProperty());
+           }
+           @Override
+           protected String computeValue() {
+               if(currenTask.getId() == null)
+               return "Add";
+               else
+                   return "Update";
+           }
+       };
+
+        add_btn.textProperty().bind(addButtonTextBinding);
+        //Text is below 3 Button is Disabled
+        add_btn.disableProperty().bind(Bindings.greaterThan(3,currenTask.descriptionProperty().length()));
+        tasksTable.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Task>() {
+
+            @Override
+            public void changed(ObservableValue<? extends Task> observableValue, Task oldTask, Task NewTask) {
+                setCurrenTask(NewTask);
+            }
+        });
+    }
+
+    private void setCurrenTask(Task selectedTask) {
+        if (selectedTask != null) {
+            currenTask.setId(selectedTask.getId());
+            currenTask.setPriority((selectedTask.getPriority()));
+            currenTask.setDescription(selectedTask.getDescription());
+            currenTask.setProgress(selectedTask.getProgress());
+        }
+        else {
+            currenTask.setId(null);
+            currenTask.setPriority("");
+            currenTask.setDescription("");
+            currenTask.setProgress(0);
+        }
     }
 }
+
+
