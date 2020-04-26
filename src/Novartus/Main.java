@@ -73,7 +73,7 @@ public class Main extends Application {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("UI.fxml"));
 
         GridPane gridPane = fxmlLoader.load(); //Load FXML
-       Controller controller = fxmlLoader.getController(); //Accessing Controllers
+        Controller controller = fxmlLoader.getController(); //Accessing Controllers
         Scene scene = new Scene(gridPane);
         primaryStage.setScene(scene);
 

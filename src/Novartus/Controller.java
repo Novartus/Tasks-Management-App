@@ -1,5 +1,7 @@
 package Novartus;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -8,6 +10,9 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class Controller implements Initializable {
+
+    @FXML
+    private ProgressBar progressbar;
 
     @FXML
     private TableView<?> tasksTable;
@@ -47,6 +52,21 @@ public class Controller implements Initializable {
         progress_spinner.setValueFactory(
                 new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 100, 0)
         );
+
+        progress_spinner.valueProperty().addListener(new ChangeListener<Integer>() {
+
+            @Override
+            public void changed(ObservableValue<? extends Integer> observableValue, Integer oldvalue, Integer newvalue) {
+                if (newvalue.intValue() == 100) {
+                    completed_checkbox.setSelected(true);
+                } else {
+                    completed_checkbox.setSelected(false);
+                }
+                progressbar.setProgress(1.0 * newvalue / 100);
+            }
+        });
+
+
 
     }
 }

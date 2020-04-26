@@ -6,7 +6,7 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 
 public class Task {
-    public static void main(String[] args){
+    public static void main(String[] args) {
         SimpleIntegerProperty intProp = new SimpleIntegerProperty();
         intProp.set(10);
         System.out.println(intProp.get());
