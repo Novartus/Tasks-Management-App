@@ -69,8 +69,12 @@ public class Main extends Application {
         primaryStage.setResizable(false);
         primaryStage.show();*/
 
-        HBox box =FXMLLoader.load(getClass().getResource("sample.fxml"));
-        Scene scene = new Scene(box);
+        //Creating a loader using constructor
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("sample.fxml"));
+
+        HBox hBox = fxmlLoader.load(); //Load FXML
+        SampleController sampleController = fxmlLoader.getController(); //Accessing Controllers
+        Scene scene = new Scene(hBox);
         primaryStage.setScene(scene);
 
         primaryStage.setTitle("Do-It");
