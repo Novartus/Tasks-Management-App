@@ -1,5 +1,6 @@
 package Novartus;
 
+import javafx.beans.property.ReadOnlyIntegerProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
@@ -10,6 +11,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class Controller implements Initializable {
+    private Task currenTask = new Task();
 
     @FXML
     private ProgressBar progressbar;
@@ -62,11 +64,15 @@ public class Controller implements Initializable {
                 } else {
                     completed_checkbox.setSelected(false);
                 }
-                progressbar.setProgress(1.0 * newvalue / 100);
+            //    progressbar.setProgress(1.0 * newvalue / 100);
             }
         });
 
+        ReadOnlyIntegerProperty intProgress = ReadOnlyIntegerProperty.readOnlyIntegerProperty(progress_spinner.valueProperty());
+        progressbar.progressProperty().bind(intProgress.divide(100.0));
 
-
+        priority_combobox.valueProperty().bindBidirectional(currenTask.priorityProperty());
+        description_field.textProperty().bindBidirectional(currenTask.descriptionProperty());
+        progress_spinner.getValueFactory().valueProperty().bindBidirectional(currenTask.progressProperty());
     }
 }
