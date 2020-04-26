@@ -14,7 +14,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<GridPane hgap="10.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" vgap="10.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/11.0.1">
+<GridPane hgap="10.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" vgap="10.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/11.0.1" fx:controller="Novartus.Controller">
   <columnConstraints>
       <ColumnConstraints hgrow="SOMETIMES" maxWidth="194.0" minWidth="0.0" prefWidth="2.0" />
     <ColumnConstraints hgrow="SOMETIMES" maxWidth="194.0" minWidth="10.0" prefWidth="157.0" />
@@ -30,31 +30,31 @@
       <RowConstraints maxHeight="126.0" minHeight="0.0" prefHeight="1.0" vgrow="SOMETIMES" />
   </rowConstraints>
    <children>
-      <TableView prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="1">
+      <TableView fx:id="tasksTable" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="1">
          <columns>
-            <TableColumn prefWidth="108.0" text="Priority" />
-            <TableColumn prefWidth="368.0" text="Description" />
-            <TableColumn minWidth="0.0" prefWidth="123.0" text="Progress" />
+            <TableColumn fx:id="priority_col" prefWidth="108.0" text="Priority" />
+            <TableColumn fx:id="description_col" prefWidth="368.0" text="Description" />
+            <TableColumn fx:id="progress_col" minWidth="0.0" prefWidth="123.0" text="Progress" />
          </columns>
       </TableView>
-      <ComboBox prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-      <TextField GridPane.columnIndex="2" GridPane.rowIndex="2" />
-      <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="99.0" text="Add" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+      <ComboBox fx:id="priority_combobox" prefWidth="150.0" promptText="Priority Level" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+      <TextField fx:id="description_field" promptText="Enter Description of The Task" style="-fx-background-radius: 9;" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+      <Button fx:id="add_btn" mnemonicParsing="false" prefHeight="25.0" prefWidth="99.0" style="-fx-border-radius: 0;" text="Add" GridPane.columnIndex="3" GridPane.rowIndex="2" />
       <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="12.0" GridPane.columnIndex="2" GridPane.rowIndex="3">
          <children>
             <Label text="Progress" />
-            <Spinner>
+            <Spinner fx:id="progress_spinner">
                <HBox.margin>
                   <Insets />
                </HBox.margin>
             </Spinner>
-            <CheckBox mnemonicParsing="false" text="Completed" />
+            <CheckBox fx:id="completed_checkbox" mnemonicParsing="false" text="Completed" />
          </children>
          <GridPane.margin>
             <Insets />
          </GridPane.margin>
       </HBox>
-      <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="97.0" text="Cancel" GridPane.columnIndex="3" GridPane.rowIndex="3">
+      <Button fx:id="cancel_btn" mnemonicParsing="false" prefHeight="25.0" prefWidth="97.0" text="Cancel" GridPane.columnIndex="3" GridPane.rowIndex="3">
          <GridPane.margin>
             <Insets />
          </GridPane.margin>
