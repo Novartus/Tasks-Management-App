@@ -69,15 +69,15 @@ public class Main extends Application {
         primaryStage.setResizable(false);
         primaryStage.show();*/
 
-        //Creating a loader using constructor
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("sample.fxml"));
+        //Creating a FXML loader using constructor
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("UI.fxml"));
 
-        HBox hBox = fxmlLoader.load(); //Load FXML
-        SampleController sampleController = fxmlLoader.getController(); //Accessing Controllers
-        Scene scene = new Scene(hBox);
+        GridPane gridPane = fxmlLoader.load(); //Load FXML
+       Controller controller = fxmlLoader.getController(); //Accessing Controllers
+        Scene scene = new Scene(gridPane);
         primaryStage.setScene(scene);
 
-        primaryStage.setTitle("Do-It");
+        primaryStage.setTitle("Do-It Application");
         primaryStage.setAlwaysOnTop(true);
         primaryStage.setResizable(false);
         primaryStage.show();
