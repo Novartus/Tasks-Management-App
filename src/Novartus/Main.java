@@ -16,10 +16,14 @@ import javax.swing.*;
 public class Main extends Application {
     Button addButton = new Button("Add");
     Button cancelButton = new Button("Cancel");
-    TableView tabel = new TableView();
+    TableView table = new TableView();
     TextField taskname = new TextField();
     TextField another = new TextField();
     ComboBox priority = new ComboBox();
+    TableColumn column1 =  new TableColumn("Priority");
+    TableColumn column2 =  new TableColumn("Description");
+    TableColumn column3 =  new TableColumn("Progress");
+
 
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -30,8 +34,8 @@ public class Main extends Application {
         gridPane.setHgap(20);
         gridPane.setGridLinesVisible(true);
 
-        tabel.setMinWidth(550);
-        tabel.setMinHeight(300);
+        table.setMinWidth(550);
+        table.setMinHeight(300);
         taskname.setPromptText("Enter task name");
         taskname.setText("Default Text");
         another.setText("Another Field");
@@ -39,9 +43,9 @@ public class Main extends Application {
         priority.setPromptText("Enter Priority");
         addButton.setMinWidth(100);
         cancelButton.setMinWidth(100);
+        table.getColumns().addAll(column1,column2,column3);
 
-
-        GridPane.setConstraints(tabel,1,1,3,1);
+        GridPane.setConstraints(table,1,1,3,1);
         GridPane.setConstraints(taskname,2,2); // Column,Row
         GridPane.setConstraints(priority,1,2);
         GridPane.setConstraints(addButton,3,2);
@@ -57,7 +61,7 @@ public class Main extends Application {
         GridPane.setConstraints(progressArea,1,3,2,1);
 
 
-        gridPane.getChildren().addAll(tabel,taskname,priority,addButton,cancelButton,progressArea);
+        gridPane.getChildren().addAll(table,taskname,priority,addButton,cancelButton,progressArea);
         Scene scene = new Scene(gridPane, 600, 400);
         primaryStage.setScene(scene);
 
