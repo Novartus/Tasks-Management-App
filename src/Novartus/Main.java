@@ -32,7 +32,7 @@ public class Main extends Application {
         gridPane.setMinHeight(400);
         gridPane.setVgap(5);
         gridPane.setHgap(20);
-        gridPane.setGridLinesVisible(true);
+        //gridPane.setGridLinesVisible(true);
 
         table.setMinWidth(550);
         table.setMinHeight(300);
@@ -48,8 +48,8 @@ public class Main extends Application {
         GridPane.setConstraints(table,1,1,3,1);
         GridPane.setConstraints(taskname,2,2); // Column,Row
         GridPane.setConstraints(priority,1,2);
-        GridPane.setConstraints(addButton,3,2);
-        GridPane.setConstraints(cancelButton,3,3);
+        GridPane.setConstraints(addButton,4,2);
+        GridPane.setConstraints(cancelButton,4,3);
 
         HBox progressArea = new HBox();
         progressArea.getChildren().addAll(new Label("Progress"),
