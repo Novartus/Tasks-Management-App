@@ -3,6 +3,24 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<!--
 <GridPane fx:controller="Novartus.Controller"
           xmlns:fx="http://javafx.com/fxml" alignment="center" hgap="10" vgap="10">
-</GridPane>
+</GridPane>-->
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.VBox?>
+<HBox alignment="CENTER" spacing="10"  xmlns:fx="http://javafx.com/fxml"  fx:controller="Novartus.Controller">
+    <children>
+        <Label text="User Name" />
+        <TextField fx:id="textfield" />
+        <Button text="Connect" />
+
+        <VBox spacing="10" >
+            <Label text="${textfield.text}" />
+            <Button minWidth="150" text="Down"/>
+            <Button text="Further DOwn"/>
+        </VBox>
+
+    </children>
+</HBox>
