@@ -72,11 +72,11 @@ public class Controller implements Initializable {
                 } else {
                     completed_checkbox.setSelected(false);
                 }
-               /* System.out.println(currenTask.getDescription());
-                System.out.println(currenTask.getPriority());
-                System.out.println(currenTask.getProgress());
+               /* System.out.println(currentTask.getDescription());
+                System.out.println(currentTask.getPriority());
+                System.out.println(currentTask.getProgress());
 
-               currenTask.setDescription(currenTask.getProgress().toString());*/
+               currentTask.setDescription(currentTask.getProgress().toString());*/
             }
         });
 
@@ -92,29 +92,31 @@ public class Controller implements Initializable {
         description_col.setCellValueFactory(rowData -> rowData.getValue().descriptionProperty());
         progress_col.setCellValueFactory(rowData -> Bindings.concat(rowData.getValue().progressProperty(), "%"));
 
-
+        //Manually Added Tasks for Testing
         tasks.addAll(
                 new Task(1, "High", "Completed Doc", 10),
                 new Task(2, "Medium", "JavaFX", 0));
 
 
         // ADD -> Update Button || Update -> Add Button
-       StringBinding addButtonTextBinding = new StringBinding() {
-           {
-               super.bind(currenTask.idProperty());
-           }
-           @Override
-           protected String computeValue() {
-               if(currenTask.getId() == null)
-               return "Add";
-               else
-                   return "Update";
-           }
-       };
+        StringBinding addButtonTextBinding = new StringBinding() {
+            {
+                super.bind(currenTask.idProperty());
+            }
+
+            @Override
+            protected String computeValue() {
+                if (currenTask.getId() == null)
+                    return "Add";
+                else
+                    return "Update";
+            }
+        };
 
         add_btn.textProperty().bind(addButtonTextBinding);
+
         //Text is below 3 Button is Disabled
-        add_btn.disableProperty().bind(Bindings.greaterThan(3,currenTask.descriptionProperty().length()));
+        add_btn.disableProperty().bind(Bindings.greaterThan(3, currenTask.descriptionProperty().length()));
         tasksTable.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Task>() {
 
             @Override
@@ -130,8 +132,7 @@ public class Controller implements Initializable {
             currenTask.setPriority((selectedTask.getPriority()));
             currenTask.setDescription(selectedTask.getDescription());
             currenTask.setProgress(selectedTask.getProgress());
-        }
-        else {
+        } else {
             currenTask.setId(null);
             currenTask.setPriority("");
             currenTask.setDescription("");

@@ -36,12 +36,12 @@ public class Task {
         this.progress.set(progress);
     }
 
-    public void setId(Integer value){
+    public void setId(Integer value) {
         this.id.set(value);
     }
 
-    public Integer getId(){
-      return this.id.get();
+    public Integer getId() {
+        return this.id.get();
     }
 
     public ObjectProperty<Integer> idProperty() {
