@@ -1,33 +1,34 @@
 package Novartus;
 
 import javafx.application.Application;
-import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Pos;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
+
+import java.beans.XMLEncoder;
+import java.io.BufferedOutputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
 
 
 public class Main extends Application {
-  /*  Button addButton = new Button("Add");
-    Button cancelButton = new Button("Cancel");
-    TableView table = new TableView();
-    TextField taskname = new TextField();
-    TextField another = new TextField();
-    ComboBox priority = new ComboBox();
-    TableColumn column1 = new TableColumn("Priority");
-    TableColumn column2 = new TableColumn("Description");
-    TableColumn column3 = new TableColumn("Progress");*/
-
+    /*  Button addButton = new Button("Add");
+      Button cancelButton = new Button("Cancel");
+      TableView table = new TableView();
+      TextField taskname = new TextField();
+      TextField another = new TextField();
+      ComboBox priority = new ComboBox();
+      TableColumn column1 = new TableColumn("Priority");
+      TableColumn column2 = new TableColumn("Description");
+      TableColumn column3 = new TableColumn("Progress");*/
+    Controller controller;
+    String fileName = "Task.xml";
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-       /* GridPane gridPane = new GridPane();
+        /* GridPane gridPane = new GridPane();
         gridPane.setMinWidth(600);
         gridPane.setMinHeight(400);
         gridPane.setVgap(5);
@@ -74,8 +75,9 @@ public class Main extends Application {
         //Creating a FXML loader using constructor
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("UI.fxml"));
 
+        controller = fxmlLoader.getController();
+
         GridPane gridPane = fxmlLoader.load(); //Load FXML
-        Controller controller = fxmlLoader.getController(); //Accessing Controllers
         Scene scene = new Scene(gridPane);
         primaryStage.setScene(scene);
 
@@ -83,12 +85,33 @@ public class Main extends Application {
         primaryStage.setAlwaysOnTop(false);
         primaryStage.setResizable(false);
 
-      /*  scene.addEventFilter(MouseEvent.MOUSE_PRESSED, mouseEvent -> {
+        primaryStage.setOnCloseRequest(this::onClose); // JAVA 8 : Method Refrence Shortcut ,lambda expression
+        primaryStage.show();
+        /*primaryStage.setOnCloseRequest(windowEvent -> {
+            onClose(windowEvent);
+        })*/
+        /*  scene.addEventFilter(MouseEvent.MOUSE_PRESSED, mouseEvent -> {
             System.out.println("Scene Filter :" + mouseEvent.getEventType().getName());
         });*/
+    }
 
-        primaryStage.show();
-
+    private void onClose(WindowEvent windowEvent) {
+        // new Alert(Alert.AlertType.INFORMATION, windowEvent.getEventType().getName()).showAndWait();
+        FileOutputStream out = null;
+        XMLEncoder encoder = null;
+        try {
+            out = new FileOutputStream(fileName);
+            encoder = new XMLEncoder(new BufferedOutputStream(out));
+            encoder.writeObject(controller.getTasksMap());
+            encoder.close();
+        } catch (Exception e) {
+            if (out != null)
+                try {
+                    out.close();
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
+        }
     }
 
     public static void main(String[] args) {

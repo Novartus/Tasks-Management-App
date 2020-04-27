@@ -26,6 +26,9 @@ public class Controller implements Initializable {
     private final ObservableList<Task> tasks = FXCollections.observableArrayList();
     private final HashMap<Integer, Task> tasksMap = new HashMap<>();
 
+    public HashMap<Integer, Task> getTasksMap() {
+        return tasksMap;
+    }
 
     @FXML
     private ProgressBar progressbar;
@@ -118,15 +121,19 @@ public class Controller implements Initializable {
 
         //Text is below 3 Button is Disabled
         add_btn.disableProperty().bind(Bindings.greaterThan(3, currenTask.descriptionProperty().length()));
-        tasksTable.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Task>() {
+        tasksTable.getSelectionModel().selectedItemProperty().addListener((observableValue, oldTask, NewTask) -> {
+            setCurrenTask(NewTask);
+        });
+
+        /*tasksTable.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Task>() {
 
             @Override
             public void changed(ObservableValue<? extends Task> observableValue, Task oldTask, Task NewTask) {
                 setCurrenTask(NewTask);
             }
-        });
+        });*/
 
-       /* //Filter Run During Event Capture Phase
+        /* //Filter Run During Event Capture Phase
         add_btn.addEventFilter(MouseEvent.MOUSE_PRESSED, new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
@@ -140,10 +147,10 @@ public class Controller implements Initializable {
         add_btn.addEventHandler(MouseEvent.MOUSE_CLICKED, mouseEvent ->
                 System.out.println("Handler: " + mouseEvent.getEventType().getName()));*/
 
-       /* add_btn.setOnAction(actionEvent -> {
+        /* add_btn.setOnAction(actionEvent -> {
             System.out.println("ACTION");
         });*/
-
+        /*
         description_field.setOnAction(actionEvent -> {
             System.out.println("Text Field Action");
         });
@@ -154,9 +161,9 @@ public class Controller implements Initializable {
 
         completed_checkbox.setOnAction(actionEvent -> {
             System.out.println("Check Box");
-        });
+        });*/
 
-       /* cancel_btn.setOnAction(actionEvent -> {
+        /* cancel_btn.setOnAction(actionEvent -> {
             System.out.println("Cancel Button");
         });*/
 
@@ -192,9 +199,9 @@ public class Controller implements Initializable {
         alert.setHeaderText("Are you sure you want to cancel");
         alert.setTitle("Cancelling The Update");
         //alert.setContentText("This is the detailed info");
-        alert.getButtonTypes().remove(0,2);
-        alert.getButtonTypes().add(0,ButtonType.YES);
-        alert.getButtonTypes().add(1,ButtonType.NO);
+        alert.getButtonTypes().remove(0, 2);
+        alert.getButtonTypes().add(0, ButtonType.YES);
+        alert.getButtonTypes().add(1, ButtonType.NO);
         Optional<ButtonType> confirmationResponse = alert.showAndWait();
         if (confirmationResponse.get() == ButtonType.YES) {
             setCurrenTask(null);
