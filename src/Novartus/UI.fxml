@@ -41,7 +41,7 @@
         </TableView>
         <ComboBox fx:id="priority_combobox" prefWidth="150.0" promptText="Priority Level" GridPane.columnIndex="1" GridPane.rowIndex="2" />
         <TextField fx:id="description_field" opacity="0.75" promptText="Enter Description of The Task" style="-fx-background-radius: 0;" GridPane.columnIndex="2" GridPane.rowIndex="2" />
-        <Button fx:id="add_btn" mnemonicParsing="false" prefHeight="25.0" prefWidth="99.0" style="-fx-border-radius: 0;" text="Add" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+        <Button fx:id="add_btn" mnemonicParsing="false" onAction="#addButtonClicked" prefHeight="25.0" prefWidth="99.0" style="-fx-border-radius: 0;" text="Add" GridPane.columnIndex="3" GridPane.rowIndex="2" />
         <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="12.0" GridPane.columnIndex="2" GridPane.rowIndex="3">
             <children>
                 <Label text="Progress" />
@@ -56,7 +56,7 @@
                 <Insets />
             </GridPane.margin>
         </HBox>
-        <Button fx:id="cancel_btn" mnemonicParsing="false" prefHeight="25.0" prefWidth="97.0" text="Cancel" GridPane.columnIndex="3" GridPane.rowIndex="3">
+        <Button fx:id="cancel_btn" mnemonicParsing="false" onAction="#cancelButtonClicked" prefHeight="25.0" prefWidth="97.0" text="Cancel" GridPane.columnIndex="3" GridPane.rowIndex="3">
             <GridPane.margin>
                 <Insets />
             </GridPane.margin>
