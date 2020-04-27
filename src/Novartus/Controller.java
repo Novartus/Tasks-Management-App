@@ -9,16 +9,21 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.input.MouseEvent;
 
 import java.net.URL;
+import java.util.HashMap;
 import java.util.ResourceBundle;
 
 public class Controller implements Initializable {
     private final Task currenTask = new Task();
     private final ObservableList<Task> tasks = FXCollections.observableArrayList();
+    private final HashMap<Integer, Task> tasksMap = new HashMap<>();
 
 
     @FXML
@@ -56,28 +61,23 @@ public class Controller implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        //description_field.setText("Test");
 
         priority_combobox.getItems().addAll("High", "Medium", "Low");
         progress_spinner.setValueFactory(
                 new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 100, 0)
         );
 
-        progress_spinner.valueProperty().addListener(new ChangeListener<Integer>() {
-
-            @Override
-            public void changed(ObservableValue<? extends Integer> observableValue, Integer oldvalue, Integer newvalue) {
-                if (newvalue.intValue() == 100) {
-                    completed_checkbox.setSelected(true);
-                } else {
-                    completed_checkbox.setSelected(false);
-                }
-               /* System.out.println(currentTask.getDescription());
-                System.out.println(currentTask.getPriority());
-                System.out.println(currentTask.getProgress());
-
-               currentTask.setDescription(currentTask.getProgress().toString());*/
+        progress_spinner.valueProperty().addListener((observableValue, oldvalue, newvalue) -> {
+            if (newvalue.intValue() == 100) {
+                completed_checkbox.setSelected(true);
+            } else {
+                completed_checkbox.setSelected(false);
             }
+           /* System.out.println(currentTask.getDescription());
+            System.out.println(currentTask.getPriority());
+            System.out.println(currentTask.getProgress());
+
+           currentTask.setDescription(currentTask.getProgress().toString());*/
         });
 
         ReadOnlyIntegerProperty intProgress = ReadOnlyIntegerProperty.readOnlyIntegerProperty(progress_spinner.valueProperty());
@@ -93,9 +93,9 @@ public class Controller implements Initializable {
         progress_col.setCellValueFactory(rowData -> Bindings.concat(rowData.getValue().progressProperty(), "%"));
 
         //Manually Added Tasks for Testing
-        tasks.addAll(
+       /* tasks.addAll(
                 new Task(1, "High", "Completed Doc", 10),
-                new Task(2, "Medium", "JavaFX", 0));
+                new Task(2, "Medium", "JavaFX", 0));*/
 
 
         // ADD -> Update Button || Update -> Add Button
@@ -124,6 +124,71 @@ public class Controller implements Initializable {
                 setCurrenTask(NewTask);
             }
         });
+
+       /* //Filter Run During Event Capture Phase
+        add_btn.addEventFilter(MouseEvent.MOUSE_PRESSED, new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                System.out.println("Filter: " + mouseEvent.getEventType().getName());
+            }
+
+        });
+
+        //Filter Run During Event Bubbling Phase
+        //Using Lambda Expression Here
+        add_btn.addEventHandler(MouseEvent.MOUSE_CLICKED, mouseEvent ->
+                System.out.println("Handler: " + mouseEvent.getEventType().getName()));*/
+
+       /* add_btn.setOnAction(actionEvent -> {
+            System.out.println("ACTION");
+        });*/
+
+        description_field.setOnAction(actionEvent -> {
+            System.out.println("Text Field Action");
+        });
+
+        priority_combobox.setOnAction(actionEvent -> {
+            System.out.println("Combo Box");
+        });
+
+        completed_checkbox.setOnAction(actionEvent -> {
+            System.out.println("Check Box");
+        });
+
+       /* cancel_btn.setOnAction(actionEvent -> {
+            System.out.println("Cancel Button");
+        });*/
+
+        // Action Button through event handler
+        /*add_btn.addEventHandler(ActionEvent.ACTION, actionEvent -> {
+            System.out.println("Action Event Handler");
+        });*/
+
+
+    }
+
+    int lastId = 0;
+
+    @FXML
+    void addButtonClicked(ActionEvent event) {
+        if(currenTask.getId()== null){
+            Task t = new Task(++lastId, currenTask.getPriority(), currenTask.getDescription(), currenTask.getProgress());
+            tasks.add(t);
+            tasksMap.put(lastId, t);
+        }else {
+            Task t = tasksMap.get(currenTask.getId());
+            t.setDescription(currenTask.getDescription());
+            t.setPriority(currenTask.getPriority());
+            t.setProgress(currenTask.getProgress());
+        }
+        //System.out.println("Action Through SceneBuilder");
+        setCurrenTask(null);
+    }
+
+    @FXML
+    void cancelButtonClicked(ActionEvent event) {
+        setCurrenTask(null);
+        tasksTable.getSelectionModel().clearSelection();
     }
 
     private void setCurrenTask(Task selectedTask) {

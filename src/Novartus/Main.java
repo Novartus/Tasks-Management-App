@@ -1,11 +1,13 @@
 package Novartus;
 
 import javafx.application.Application;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
@@ -80,6 +82,11 @@ public class Main extends Application {
         primaryStage.setTitle("Do-It Application");
         primaryStage.setAlwaysOnTop(true);
         primaryStage.setResizable(false);
+
+      /*  scene.addEventFilter(MouseEvent.MOUSE_PRESSED, mouseEvent -> {
+            System.out.println("Scene Filter :" + mouseEvent.getEventType().getName());
+        });*/
+
         primaryStage.show();
 
     }
