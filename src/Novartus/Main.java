@@ -80,7 +80,7 @@ public class Main extends Application {
         primaryStage.setScene(scene);
 
         primaryStage.setTitle("Do-It Application");
-        primaryStage.setAlwaysOnTop(true);
+        primaryStage.setAlwaysOnTop(false);
         primaryStage.setResizable(false);
 
       /*  scene.addEventFilter(MouseEvent.MOUSE_PRESSED, mouseEvent -> {

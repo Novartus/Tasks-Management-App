@@ -18,6 +18,7 @@ import javafx.scene.input.MouseEvent;
 
 import java.net.URL;
 import java.util.HashMap;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class Controller implements Initializable {
@@ -171,11 +172,11 @@ public class Controller implements Initializable {
 
     @FXML
     void addButtonClicked(ActionEvent event) {
-        if(currenTask.getId()== null){
+        if (currenTask.getId() == null) {
             Task t = new Task(++lastId, currenTask.getPriority(), currenTask.getDescription(), currenTask.getProgress());
             tasks.add(t);
             tasksMap.put(lastId, t);
-        }else {
+        } else {
             Task t = tasksMap.get(currenTask.getId());
             t.setDescription(currenTask.getDescription());
             t.setPriority(currenTask.getPriority());
@@ -187,8 +188,20 @@ public class Controller implements Initializable {
 
     @FXML
     void cancelButtonClicked(ActionEvent event) {
-        setCurrenTask(null);
-        tasksTable.getSelectionModel().clearSelection();
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setHeaderText("Are you sure you want to cancel");
+        alert.setTitle("Cancelling The Update");
+        //alert.setContentText("This is the detailed info");
+        alert.getButtonTypes().remove(0,2);
+        alert.getButtonTypes().add(0,ButtonType.YES);
+        alert.getButtonTypes().add(1,ButtonType.NO);
+        Optional<ButtonType> confirmationResponse = alert.showAndWait();
+        if (confirmationResponse.get() == ButtonType.YES) {
+            setCurrenTask(null);
+            tasksTable.getSelectionModel().clearSelection();
+        } else {
+            System.out.println("Cancel Button Clicked");
+        }
     }
 
     private void setCurrenTask(Task selectedTask) {
